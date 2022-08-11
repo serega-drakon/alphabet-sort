@@ -12,13 +12,13 @@ main() {
 
 	FILE* infile;
 	FILE* outfile;
-	infile = fopen("C:\\Users\\slepy\\source\\repos\\alphabet sort\\getline_2d\\in.txt", "r");
-	outfile = fopen("C:\\Users\\slepy\\source\\repos\\alphabet sort\\getline_2d\\out.txt", "w");
+	infile = fopen("C:\\Users\\slepy\\source\\repos\\alphabet-sort-new\\getline and fprint\\in.txt", "r");
+	outfile = fopen("C:\\Users\\slepy\\source\\repos\\alphabet-sort-new\\getline and fprint\\out.txt", "w");
 
 	int line[MAXLINE];
 	printf("%d\n", getline(line, MAXLINE, infile));
-	int i;
-	for (i = 0; i < MAXLINE && line[i] != '\0'; i++)
+
+	for (int i = 0; line[i] != '\0'; i++)
 		printf("%c", line[i]);
 
 	fprint(line, outfile);

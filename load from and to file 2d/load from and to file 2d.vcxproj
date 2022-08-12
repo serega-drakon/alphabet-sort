@@ -129,6 +129,9 @@
   <ItemGroup>
     <ClCompile Include="load from and to file 2d.c" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="int_array_2d.h" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

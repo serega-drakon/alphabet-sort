@@ -7,7 +7,7 @@ int isletter(char a);
 //1 if fisrt is higher
 //2 if second is higher
 main() {
-	char line1[] = "caaa";
+	char line1[] = "baa";
 	char line2[] = "baab";
 	int st1, st2;
 	int c1, c2;
@@ -17,8 +17,14 @@ main() {
 		for (; !isletter(line2[j]); j++);
 		st1 = isletter(line1[i]);
 		st2 = isletter(line2[j]);
-		printf("line1: %c\n", line1[i]);
-		printf("line2: %c\n", line2[j]);
+		if (line1[i] != '\0')
+			printf("line1: %c\n", line1[i]);
+		else
+			printf("line1: \\0\n");
+		if (line2[j] != '\0')
+			printf("line2: %c\n", line2[j]);
+		else
+			printf("line2: \\0\n");
 
 		if (st1 == 1)
 			c1 = line1[i] - 'a';
@@ -38,8 +44,7 @@ main() {
 			printf("1");
 		else if (c2 < c1)
 			printf("2");
-		i++; j++;
-	} while (line1[i] != '\0' && line2[j] != '\0' && c1 == c2);
+	} while (line1[i++] != '\0' && line2[j++] != '\0' && c1 == c2);
 }
 
 //ASCII

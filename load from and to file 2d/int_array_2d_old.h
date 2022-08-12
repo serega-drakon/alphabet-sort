@@ -3,8 +3,8 @@
 
 #include <stdio.h>
 
-#define MAX_X 3
-#define MAX_Y 3
+#define MAX_X 300
+#define MAX_Y 10
 
 int arr2d[MAX_X * MAX_Y];
 

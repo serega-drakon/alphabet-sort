@@ -1,4 +1,5 @@
 ﻿#include <stdio.h>
+#include <Windows.h>
 #include "int_array_2d_old.h"
 
 void loadfromfile2d(FILE* in);
@@ -7,12 +8,16 @@ void fprint(int s[], FILE* out);
 int getline(int s[], int lim, FILE* in);
 
 main() { /* TEST */
+	SetConsoleCP(1251); //localization
+	SetConsoleOutputCP(1251); // encoding of txt must be ANCI !!!!
+
 	FILE* in;
 	FILE* out;
 	in = fopen("in.txt", "r");
 	out = fopen("out.txt", "w");
 
-
+	loadfromfile2d(in);
+	savetofile2d(out);
 
 	fclose(in);
 	fclose(out);
@@ -20,16 +25,16 @@ main() { /* TEST */
 
 int nextfreeY_2d = 0;
 
-void loadfromfile2d(FILE* in) {
+void loadfromfile2d(FILE* in) { //WORKS!
 	int line[MAX_X];
 	extern int nextfreeY_2d;
-	int x, y = 0;
+	int x;
 	for (; getline(line, MAX_X, in) > 0 && nextfreeY_2d < MAX_Y; nextfreeY_2d++)
-		for (x = 0; x < MAX_X && (array_2d_w(x, y++, line[x])) != '\0'; x++)
+		for (x = 0; x < MAX_X && (array_2d_w(x, nextfreeY_2d, line[x])) != '\0'; x++)
 			;
 }
 
-void savetofile2d(FILE* out) {
+void savetofile2d(FILE* out) { //WORKS!
 	extern int nextfreeY_2d;
 	int line[MAX_X];
 	for (int y = 0; y < nextfreeY_2d; y++) {

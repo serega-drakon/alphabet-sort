@@ -133,6 +133,10 @@
     <ClInclude Include="fileio.h" />
     <ClInclude Include="int_array_2d.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="main_in.txt" />
+    <Text Include="main_out.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

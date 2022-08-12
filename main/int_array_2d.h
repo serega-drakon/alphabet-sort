@@ -123,6 +123,4 @@ int isletter(int a) { //TESTED
 		return 0;
 }
 
-
-
 #endif

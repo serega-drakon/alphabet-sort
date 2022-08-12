@@ -1,18 +1,12 @@
 ﻿#include <stdio.h>
-#include <Windows.h>
 #include "int_array_2d.h"
 
-main() {
-	SetConsoleCP(1251); //localization
-	SetConsoleOutputCP(1251); // encoding of txt must be ANCI !!!!
+main() { //only ANSI txt!
 	FILE* in;
 	FILE* out;
 	in = fopen("main_in.txt", "r");
 	out = fopen("main_out.txt", "w");
 	loadfromfile2d(in);
-
-	extern int nextfreeY_2d;
-
 	/*	
 	* алгоритм сортировки Шелла для чиселок:
 	int gap, i, j, temp;
@@ -25,8 +19,8 @@ main() {
 			v[j + gap] = temp;
 	}
 	*/
-
 	//shell's sort algorithm
+	extern int nextfreeY_2d;
 	int gap, i, j;
 	for(gap = nextfreeY_2d / 2; gap > 0; gap /= 2)
 		for (i = gap; i < nextfreeY_2d; i++) {

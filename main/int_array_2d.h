@@ -74,7 +74,7 @@ void loadfromfile2d(FILE* in) {
 	int line[MAX_X];
 	extern int nextfreeY_2d;
 	int x;
-	for (; getline(line, MAX_X, in) > 0 && nextfreeY_2d < MAX_Y - 1; nextfreeY_2d++)//оставляет одну строку "в запасе"
+	for (; getline(line, MAX_X, in) > 0 && nextfreeY_2d < MAX_Y - 1; nextfreeY_2d++)//оставляет как минимум одну строку "в запасе"
 		for (x = 0; x < MAX_X && (array_2d_w(x, nextfreeY_2d, line[x])) != '\0'; x++)
 			;
 }
@@ -106,10 +106,10 @@ int alphabetENGY(int y1, int y2)
 	int c1, c2;
 	int i = 0, j = 0;
 	do {
-		for (; isletter(array_2d_r(i, y1)) == 0; i++);
-		for (; isletter(array_2d_r(j, y2)) == 0; j++);
-		st1 = isletter(array_2d_r(i, y1));
-		st2 = isletter(array_2d_r(j, y2));
+		for (; (st1 = isletter(array_2d_r(i, y1))) != 1 && st1 != 2 && st1 != -1; i++)
+			;
+		for (; (st2 = isletter(array_2d_r(j, y2))) != 1 && st2 != 2 && st2 != -1; j++)
+			;
 		if (st1 == 1)
 			c1 = array_2d_r(i, y1) - 'a';
 		else if (st1 == 2)
@@ -132,7 +132,7 @@ int alphabetENGY(int y1, int y2)
 	return 0;
 }
 
-int alphabetRUY(int y1, int y2) //FIXME!!!!!!!!!!!!!!!!!!!!!!!!!!
+int alphabetRUY(int y1, int y2) 
 {
 	if (y1 >= MAX_Y || y2 >= MAX_Y || y1 < 0 || y2 < 0) {
 		printf("alphabetY: error, these Y does not exist: %d or %d", y1, y2);
@@ -146,7 +146,6 @@ int alphabetRUY(int y1, int y2) //FIXME!!!!!!!!!!!!!!!!!!!!!!!!!!
 			;
 		for (; (st2 = isletter(array_2d_r(j, y2))) != 3 && st2 != 4 && st2 != -1; j++)
 			;
-
 		if (st1 == 3)
 			c1 = array_2d_r(i, y1) - ('а' & 255);
 		else if (st1 == 4)

@@ -2,6 +2,7 @@
 #define INT_ARRAY_2D
 
 #include <stdio.h>
+#include "fileio.h"
 
 #define MAX_X 3
 #define MAX_Y 3
@@ -65,6 +66,31 @@ void copyfromstr(int y, int s[]) {
 			;
 	else
 		printf("copyfromstr: error that Y does not exist in array_2d: %d", y);
+}
+
+int nextfreeY_2d = 0;
+
+void loadfromfile2d(FILE* in) { //WORKS!
+	int line[MAX_X];
+	extern int nextfreeY_2d;
+	int x;
+	for (; getline(line, MAX_X, in) > 0 && nextfreeY_2d < MAX_Y; nextfreeY_2d++)
+		for (x = 0; x < MAX_X && (array_2d_w(x, nextfreeY_2d, line[x])) != '\0'; x++)
+			;
+}
+
+void savetofile2d(FILE* out) { //WORKS!
+	extern int nextfreeY_2d;
+	int line[MAX_X];
+	for (int y = 0; y < nextfreeY_2d; y++) {
+		copytostr(y, line);
+		fprint(line, out);
+	}
+}
+
+void reset_save2d(void) {
+	extern int nextfreeY_2d;
+	nextfreeY_2d = 0;
 }
 
 //returns 0 if strings are the same

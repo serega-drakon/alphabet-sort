@@ -23,5 +23,8 @@
     <ClInclude Include="int_array_2d.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
+    <ClInclude Include="fileio.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

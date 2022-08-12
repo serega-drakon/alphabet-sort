@@ -1,6 +1,6 @@
 ﻿#include <stdio.h>
 
-#define N 10
+#define N 100
 
 void shellsort(int v[], int n);
 

@@ -5,11 +5,12 @@
 
 int getline(int s[], int lim, FILE* in) {
 	int i; int c;
-	for (i = 0; i < lim - 2 && (c = getc(in)) != '\n' && c != EOF; i++)
+	for (i = 0; i < lim - 2 && (c = getc(in)) != '\n' && c != EOF; i++) 
 		s[i] = c;
-	s[i++] = '\n';//добавляет символ новой строки всегда
+	if(c == '\n')
+		s[i++] = '\n';
 	s[i] = '\0';
-	return i - 1;
+	return i;
 }
 
 void fprint(int s[], FILE* out) { 

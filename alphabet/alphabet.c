@@ -11,8 +11,10 @@ main() {
 	SetConsoleCP(1251); //localization
 	SetConsoleOutputCP(1251); // encoding of txt must be ANCI !!!!
 	char c;
-	printf("%d",isletter(c = getchar()));
-	printf("%d\n", c);
+	printf("%d\n",isletter(c = getchar()));
+
+	printf("%d\n", isletter(207));
+
 
 	char line1[] = "baa";
 	char line2[] = "baab";
@@ -59,14 +61,14 @@ main() {
 //returns 0 if it is not letter
 //returns 1 if it is eng letter in lowercase
 //returns 2 if it is eng letter in uppercase
-int isletter(int a) { //TESTED
+int isletter(int a) { //FIXME
 	if (a >= 'a' && a <= 'z')
 		return 1;
 	else if (a >= 'A' && a <= 'Z')
 		return 2;
-	else if (a >= 'а' && a <= 'я')
+	else if (a >= ('а' & 255) && a <= ('я' & 255))
 		return 3;
-	else if (a >= 'А' && a <= 'Я')
+	else if (a >= ('А' & 255) && a <= ('Я' & 255))
 		return 4;
 	else if (a == '\0')
 		return -1;

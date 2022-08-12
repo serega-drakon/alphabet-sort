@@ -4,8 +4,8 @@
 #include <stdio.h>
 #include "fileio.h"
 
-#define MAX_X 100
-#define MAX_Y 100
+#define MAX_X 300
+#define MAX_Y 8000
 
 int arr2d[MAX_X * MAX_Y];
 
@@ -74,7 +74,7 @@ void loadfromfile2d(FILE* in) {
 	int line[MAX_X];
 	extern int nextfreeY_2d;
 	int x;
-	for (; getline(line, MAX_X, in) > 0 && nextfreeY_2d < MAX_Y; nextfreeY_2d++)
+	for (; getline(line, MAX_X, in) > 0 && nextfreeY_2d < MAX_Y - 1; nextfreeY_2d++)//оставляет одну строку "в запасе"
 		for (x = 0; x < MAX_X && (array_2d_w(x, nextfreeY_2d, line[x])) != '\0'; x++)
 			;
 }
@@ -142,10 +142,11 @@ int alphabetRUY(int y1, int y2) //FIXME!!!!!!!!!!!!!!!!!!!!!!!!!!
 	int c1, c2;
 	int i = 0, j = 0;
 	do {
-		for (; isletter(array_2d_r(i, y1)) == 0; i++);
-		for (; isletter(array_2d_r(j, y2)) == 0; j++);
-		st1 = isletter(array_2d_r(i, y1));
-		st2 = isletter(array_2d_r(j, y2));
+		for (; (st1 = isletter(array_2d_r(i, y1))) != 3 && st1 != 4 && st1 != -1; i++)
+			;
+		for (; (st2 = isletter(array_2d_r(j, y2))) != 3 && st2 != 4 && st2 != -1; j++)
+			;
+
 		if (st1 == 3)
 			c1 = array_2d_r(i, y1) - ('а' & 255);
 		else if (st1 == 4)

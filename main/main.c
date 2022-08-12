@@ -27,14 +27,14 @@ main() {
 	*/
 
 	//shell's sort algorithm
-	int gap, i, j, temp[MAX_X];
-	for(gap = (nextfreeY_2d + 1) / 2; gap > 0; gap /= 2)
-		for (i = gap; i < (nextfreeY_2d + 1); i++) {
-			copytostr(i,temp);
-			for (j = i - gap; j >= 0 && alphabetRUY(i, j) == 1; j -= gap)
+	int gap, i, j;
+	for(gap = nextfreeY_2d / 2; gap > 0; gap /= 2)
+		for (i = gap; i < nextfreeY_2d; i++) {
+			copyY(i, nextfreeY_2d);
+			for (j = i - gap; j >= 0 && alphabetRUY(nextfreeY_2d, j) == 1; j -= gap)
 				copyY(j, j + gap);
 			if(j + gap != i)
-				copyfromstr(j + gap, temp);
+				copyY(nextfreeY_2d,j + gap);
 		}
 
 	savetofile2d(out);

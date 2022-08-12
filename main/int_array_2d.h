@@ -1,74 +1,16 @@
-﻿#include <stdio.h>
+#ifndef INT_ARRAY_2D
+#define INT_ARRAY_2D
+
+#include <stdio.h>
 
 #define READ 0
 #define WRITE 1
 #define MAX_X 3
 #define MAX_Y 3
 
-int array_2d(int x, int y, const _Bool mode, const int value);
-void copyY(int y1, int y2);
-void copytostr(int y, int s[]);
-void copyfromstr(int y, int s[]);
-void swapY(int y1, int y2);
-int alphabetY(int y1, int y2);
-
-main() { /* test */
-	//array_2d test:
-	for (int i = 0; i < MAX_Y; i++)
-		for (int j = 0; j < MAX_X; j++)
-			array_2d(j, i, WRITE, getchar());
-	for (int i = 0; i < MAX_Y; i++) {
-		for (int j = 0; j < MAX_X; j++)
-			printf("%c", array_2d(j, i, READ, 0));
-		printf("\n");
-	}
-	//swapY test:
-	printf("swap!\n");
-	swapY(1, 2);
-	for (int i = 0; i < MAX_Y; i++) {
-		for (int j = 0; j < MAX_X; j++)
-			printf("%c", array_2d(j, i, READ, 0));
-		printf("\n");
-	}
-	printf("swap!\n");
-	swapY(0, 1);
-	for (int i = 0; i < MAX_Y; i++) {
-		for (int j = 0; j < MAX_X; j++)
-			printf("%c", array_2d(j, i, READ, 0));
-		printf("\n");
-	}
-	//alphabetY test:
-	printf("alphabetY: %d, %d\n", alphabetY(0, 1), alphabetY(1, 2));
-	//copyY test:
-	printf("copy!\n");
-	copyY(1, 2);
-	for (int i = 0; i < MAX_Y; i++) {
-		for (int j = 0; j < MAX_X; j++)
-			printf("%c", array_2d(j, i, READ, 0));
-		printf("\n");
-	}
-	//copytostr test:
-	printf("copy to str!\n");
-	int line[4];
-	copytostr(0, line);
-	line[3] = '\0';
-	for(int i = 0; i < 4; i++)
-		printf("%c", line[i]);
-	printf("\n");
-	copytostr(1, line);
-	for (int i = 0; i < 4; i++)
-		printf("%c", line[i]);
-	printf("\n");
-	copytostr(2, line);
-	for (int i = 0; i < 4; i++)
-		printf("%c", line[i]);
-	printf("\n");
-}
-
-int arr2d[MAX_X * MAX_Y];
-
 int array_2d(int x, int y, const _Bool mode, const int value) {//WORKS!
-	if(x < MAX_X && y < MAX_Y && x >= 0 && y >= 0)
+	static int arr2d[MAX_X * MAX_Y];
+	if (x < MAX_X && y < MAX_Y && x >= 0 && y >= 0)
 		if (mode) { //write
 			arr2d[y * MAX_X + x] = value;
 			return value;
@@ -91,7 +33,7 @@ void swapY(int y1, int y2) {//WORKS!
 			array_2d(x, y2, WRITE, temp);
 		}
 	}
-	else 
+	else
 		printf("swapY: error these Y does not exist in array_2d: %d or %d", y1, y2);
 }
 
@@ -178,3 +120,4 @@ int isletter(int a) { //TESTED
 		return 0;
 }
 
+#endif

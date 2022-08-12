@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="getline and fprint.cpp">
+    <ClCompile Include="getline and fprint.c">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>

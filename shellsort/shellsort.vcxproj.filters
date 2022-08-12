@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="shellsort.cpp">
+    <ClCompile Include="shellsort.c">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>

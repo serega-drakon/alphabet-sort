@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="array2d.c">
+    <ClCompile Include="load from and to file 2d.c">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>

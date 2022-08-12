@@ -3,6 +3,9 @@
 
 int isletter(char a);
 
+//returns 0 if strings are the same
+//1 if fisrt is higher
+//2 if second is higher
 main() {
 	char line1[] = "caaa";
 	char line2[] = "baab";
@@ -44,7 +47,7 @@ main() {
 //returns 0 if it is not letter
 //returns 1 if it is eng letter in lowercase
 //returns 2 if it is eng letter in uppercase
-int isletter(char a) {
+int isletter(char a) { //WORKS!
 	if (a >= 'a' && a <= 'z')
 		return 1;
 	else if (a >= 'A' && a <= 'Z')

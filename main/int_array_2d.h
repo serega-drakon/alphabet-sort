@@ -4,8 +4,8 @@
 #include <stdio.h>
 #include "fileio.h"
 
-#define MAX_X 3
-#define MAX_Y 3
+#define MAX_X 100
+#define MAX_Y 100
 
 int arr2d[MAX_X * MAX_Y];
 
@@ -28,7 +28,7 @@ int array_2d_w(int x, int y, int value) {
 }
 
 //swap y1 line and y2
-void swapY(int y1, int y2) {//WORKS!
+void swapY(int y1, int y2) {
 	if (y1 < MAX_Y && y2 < MAX_Y && y1 >= 0 && y2 >= 0) {
 		int temp;
 		for (int x = 0; x < MAX_X; x++) {
@@ -42,7 +42,7 @@ void swapY(int y1, int y2) {//WORKS!
 }
 
 //copy y1 line to y2
-void copyY(int y1, int y2) { //WORKS!
+void copyY(int y1, int y2) { 
 	if (y1 < MAX_Y && y2 < MAX_Y && y1 >= 0 && y2 >= 0)
 		for (int x = 0; x < MAX_X; x++)
 			array_2d_w(x, y2, array_2d_r(x, y1));
@@ -51,7 +51,7 @@ void copyY(int y1, int y2) { //WORKS!
 }
 
 //str s has bigger or equal size than MAX_X
-void copytostr(int y, int s[]) { //WORKS!
+void copytostr(int y, int s[]) {
 	if (y < MAX_Y && y >= 0)
 		for (int x = 0; x < MAX_X && (s[x] = array_2d_r(x, y)) != '\0'; x++)
 			;
@@ -70,7 +70,7 @@ void copyfromstr(int y, int s[]) {
 
 int nextfreeY_2d = 0;
 
-void loadfromfile2d(FILE* in) { //WORKS!
+void loadfromfile2d(FILE* in) { 
 	int line[MAX_X];
 	extern int nextfreeY_2d;
 	int x;
@@ -79,7 +79,7 @@ void loadfromfile2d(FILE* in) { //WORKS!
 			;
 }
 
-void savetofile2d(FILE* out) { //WORKS!
+void savetofile2d(FILE* out) {
 	extern int nextfreeY_2d;
 	int line[MAX_X];
 	for (int y = 0; y < nextfreeY_2d; y++) {
@@ -96,9 +96,8 @@ void reset_save2d(void) {
 //returns 0 if strings are the same
 //1 if fisrt is higher
 //2 if second is higher
-int alphabetY(int y1, int y2) //WORKS!
+int alphabetENGY(int y1, int y2) 
 {
-	int isletter(int a);
 	if (y1 >= MAX_Y || y2 >= MAX_Y || y1 < 0 || y2 < 0) {
 		printf("alphabetY: error, these Y does not exist: %d or %d", y1, y2);
 		return -1;
@@ -116,14 +115,14 @@ int alphabetY(int y1, int y2) //WORKS!
 		else if (st1 == 2)
 			c1 = array_2d_r(i, y1) - 'A';
 		else if (st1 == -1)
-			c1 = -1;
+			c1 = 'Z' > 'z' ? 'Z' + 1 : 'z' + 1;
 
 		if (st2 == 1)
 			c2 = array_2d_r(j, y2) - 'a';
 		else if (st2 == 2)
 			c2 = array_2d_r(j, y2) - 'A';
 		else if (st2 == -1)
-			c2 = -1;
+			c2 = 'Z' > 'z' ? 'Z' + 1 : 'z' + 1;
 
 		if (c1 < c2)
 			return 1;
@@ -133,20 +132,40 @@ int alphabetY(int y1, int y2) //WORKS!
 	return 0;
 }
 
-//ASCII
-//returns -1 if it is \0
-//returns 0 if it is not letter
-//returns 1 if it is eng letter in lowercase
-//returns 2 if it is eng letter in uppercase
-int isletter(int a) { //TESTED
-	if (a >= 'a' && a <= 'z')
-		return 1;
-	else if (a >= 'A' && a <= 'Z')
-		return 2;
-	else if (a == '\0')
+int alphabetRUY(int y1, int y2) //FIXME!!!!!!!!!!!!!!!!!!!!!!!!!!
+{
+	if (y1 >= MAX_Y || y2 >= MAX_Y || y1 < 0 || y2 < 0) {
+		printf("alphabetY: error, these Y does not exist: %d or %d", y1, y2);
 		return -1;
-	else
-		return 0;
+	}
+	short st1, st2;
+	int c1, c2;
+	int i = 0, j = 0;
+	do {
+		for (; isletter(array_2d_r(i, y1)) == 0; i++);
+		for (; isletter(array_2d_r(j, y2)) == 0; j++);
+		st1 = isletter(array_2d_r(i, y1));
+		st2 = isletter(array_2d_r(j, y2));
+		if (st1 == 3)
+			c1 = array_2d_r(i, y1) - ('à' & 255);
+		else if (st1 == 4)
+			c1 = array_2d_r(i, y1) - ('À' & 255);
+		else if (st1 == -1)
+			c1 = ('ÿ' & 255) + 1;
+
+		if (st2 == 3)
+			c2 = array_2d_r(j, y2) - ('à' & 255);
+		else if (st2 == 4)
+			c2 = array_2d_r(j, y2) - ('À' & 255);
+		else if (st2 == -1)
+			c2 = ('ÿ' & 255) + 1;
+
+		if (c1 < c2)
+			return 1;
+		else if (c2 < c1)
+			return 2;
+	} while (st1 != -1 && st2 != -1 && c1 == c2 && i++ < MAX_X && j++ < MAX_X);
+	return 0;
 }
 
 #endif

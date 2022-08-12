@@ -1,12 +1,19 @@
 ﻿#include <stdio.h>
+#include <Windows.h>
 #include <string.h>
 
-int isletter(char a);
+int isletter(int a);
 
 //returns 0 if strings are the same
 //1 if fisrt is higher
 //2 if second is higher
 main() {
+	SetConsoleCP(1251); //localization
+	SetConsoleOutputCP(1251); // encoding of txt must be ANCI !!!!
+	char c;
+	printf("%d",isletter(c = getchar()));
+	printf("%d\n", c);
+
 	char line1[] = "baa";
 	char line2[] = "baab";
 	int st1, st2;
@@ -31,14 +38,14 @@ main() {
 		else if (st1 == 2)
 			c1 = line1[i] - 'A';
 		else if (st1 == -1)
-			c1 = -1;
+			c1 = 'Z' > 'z' ? 'Z' + 1 : 'z' + 1;
 
 		if (st2 == 1)
 			c2 = line2[j] - 'a';
 		else if (st2 == 2)
 			c2 = line2[j] - 'A';
 		else if (st2 == -1)
-			c2 = -1;
+			c2 = 'Z' > 'z' ? 'Z' + 1 : 'z' + 1;
 
 		if (c1 < c2)
 			printf("1");
@@ -52,13 +59,17 @@ main() {
 //returns 0 if it is not letter
 //returns 1 if it is eng letter in lowercase
 //returns 2 if it is eng letter in uppercase
-int isletter(char a) { //WORKS!
+int isletter(int a) { //TESTED
 	if (a >= 'a' && a <= 'z')
 		return 1;
 	else if (a >= 'A' && a <= 'Z')
 		return 2;
+	else if (a >= 'а' && a <= 'я')
+		return 3;
+	else if (a >= 'А' && a <= 'Я')
+		return 4;
 	else if (a == '\0')
 		return -1;
-	else 
+	else
 		return 0;
 }

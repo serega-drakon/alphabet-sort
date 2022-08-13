@@ -9,6 +9,7 @@
 
 int arr2d[MAX_X * MAX_Y];
 
+//read
 int array_2d_r(int x, int y) {
 	if (x < MAX_X && y < MAX_Y && x >= 0 && y >= 0)
 		return arr2d[y * MAX_X + x];
@@ -17,6 +18,7 @@ int array_2d_r(int x, int y) {
 	return 0;
 }
 
+//write
 int array_2d_w(int x, int y, int value) {
 	if (x < MAX_X && y < MAX_Y && x >= 0 && y >= 0) {
 		arr2d[y * MAX_X + x] = value;
@@ -74,9 +76,9 @@ void loadfromfile2d(FILE* in) {
 	int line[MAX_X];
 	extern int nextfreeY_2d;
 	int x;
-	for (; getline(line, MAX_X, in) > 0 && nextfreeY_2d < MAX_Y - 1; nextfreeY_2d++)//оставляет как минимум одну строку "в запасе"
-		for (x = 0; x < MAX_X && (array_2d_w(x, nextfreeY_2d, line[x])) != '\0'; x++)
-			;
+	for (; getline(line, MAX_X, in) > 0 && nextfreeY_2d < MAX_Y - 1; nextfreeY_2d++)
+		//оставляет как минимум одну строку "в запасе" (нужно для буфера в main.c)
+		copyfromstr(nextfreeY_2d, line);
 }
 
 void savetofile2d(FILE* out) {
@@ -132,6 +134,9 @@ int alphabetENGY(int y1, int y2)
 	return 0;
 }
 
+//returns 0 if strings are the same
+//1 if fisrt is higher
+//2 if second is higher
 int alphabetRUY(int y1, int y2) 
 {
 	if (y1 >= MAX_Y || y2 >= MAX_Y || y1 < 0 || y2 < 0) {
@@ -147,7 +152,12 @@ int alphabetRUY(int y1, int y2)
 		for (; (st2 = isletter(array_2d_r(j, y2))) != 3 && st2 != 4 && st2 != -1; j++)
 			;
 		if (st1 == 3)
-			c1 = array_2d_r(i, y1) - ('а' & 255);
+			c1 = array_2d_r(i, y1) - ('а' & 255); 
+			/* побитовое И использовал изза шизы в кодировке
+			*  компилятор у меня расширяет 8бит в 16/32бита 
+			*  методом распространения знака, а из файла код,
+			*  полученный методом вставки нулей слева
+			*  те компилятор думает что это -32, а файл дает 224 */
 		else if (st1 == 4)
 			c1 = array_2d_r(i, y1) - ('А' & 255);
 		else if (st1 == -1)

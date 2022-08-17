@@ -1,9 +1,13 @@
 #ifndef INT_ARRAY_2D
 #define INT_ARRAY_2D
 
+/*вообще тут можно все проверки на ошибки повырезать
+* но пусть это будет "debug version" */
+
 #include <stdio.h>
 #include "fileio.h"
 
+//размеры массива
 #define MAX_X 300
 #define MAX_Y 8000
 
@@ -98,8 +102,9 @@ void reset_save2d(void) {
 //returns 0 if strings are the same
 //1 if fisrt is higher
 //2 if second is higher
-int alphabetENGY(int y1, int y2) 
+int alphabetENGY(int y1, int y2) //works with ASCII
 {
+	//analog of RU version, see for comments it
 	if (y1 >= MAX_Y || y2 >= MAX_Y || y1 < 0 || y2 < 0) {
 		printf("alphabetY: error, these Y does not exist: %d or %d", y1, y2);
 		return -1;
@@ -137,8 +142,9 @@ int alphabetENGY(int y1, int y2)
 //returns 0 if strings are the same
 //1 if fisrt is higher
 //2 if second is higher
-int alphabetRUY(int y1, int y2) 
+int alphabetRUY(int y1, int y2) //works with ASCII
 {
+	//error check
 	if (y1 >= MAX_Y || y2 >= MAX_Y || y1 < 0 || y2 < 0) {
 		printf("alphabetY: error, these Y does not exist: %d or %d", y1, y2);
 		return -1;
@@ -147,10 +153,15 @@ int alphabetRUY(int y1, int y2)
 	int c1, c2;
 	int i = 0, j = 0;
 	do {
+		//ищем след. букву
 		for (; (st1 = isletter(array_2d_r(i, y1))) != 3 && st1 != 4 && st1 != -1; i++)
 			;
 		for (; (st2 = isletter(array_2d_r(j, y2))) != 3 && st2 != 4 && st2 != -1; j++)
 			;
+
+		/*смотрим независимо от регистра букв
+		* при этом символ '\0' ставим в самый низкий приоритет
+		  для того, чтобы строки без русских букв уходили на дно*/
 		if (st1 == 3)
 			c1 = array_2d_r(i, y1) - ('а' & 255); 
 			/* побитовое И использовал изза шизы в кодировке
@@ -170,6 +181,7 @@ int alphabetRUY(int y1, int y2)
 		else if (st2 == -1)
 			c2 = ('я' & 255) + 1;
 
+		//сама сверка по алфавиту 
 		if (c1 < c2)
 			return 1;
 		else if (c2 < c1)

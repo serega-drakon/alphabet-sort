@@ -3,9 +3,12 @@
 
 #include <stdio.h>
 
+//получает стоку из файла in, записывает ее в s[].
+//lim - размер массива s[]
+//рекомендую добавить '\n' в конец файла, чтобы строки после сортировки не склеились
 int getline(int s[], int lim, FILE* in) {
 	int i; int c;
-	for (i = 0; i < lim - 2 && (c = getc(in)) != '\n' && c != EOF; i++) 
+	for (i = 0; i < lim - 1 && (c = getc(in)) != '\n' && c != EOF; i++) 
 		s[i] = c;
 	if(c == '\n')
 		s[i++] = '\n';
@@ -13,6 +16,7 @@ int getline(int s[], int lim, FILE* in) {
 	return i;
 }
 
+//печатает строку s[] в файл out
 void fprint(int s[], FILE* out) { 
 	for (int i = 0; s[i] != '\0'; i++)
 		putc(s[i], out);

@@ -19,6 +19,7 @@ main() { //only ANSI txt!
 			v[j + gap] = temp;
 	}
 	*/
+
 	//shell's sort algorithm
 	extern int nextfreeY_2d;
 	int gap, i, j;

@@ -44,7 +44,7 @@ void swapY(int y1, int y2) {
 		}
 	}
 	else
-		printf("swapY: error these Y does not exist in array_2d: %d or %d", y1, y2);
+		printf("swapY: error these Y does not exist in array_2d: %d or %d\n", y1, y2);
 }
 
 //copy y1 line to y2
@@ -53,25 +53,27 @@ void copyY(int y1, int y2) {
 		for (int x = 0; x < MAX_X; x++)
 			array_2d_w(x, y2, array_2d_r(x, y1));
 	else
-		printf("copyY: error these Y does not exist in array_2d: %d or %d", y1, y2);
+		printf("copyY: error these Y does not exist in array_2d: %d or %d\n", y1, y2);
 }
 
 //str s has bigger or equal size than MAX_X
+//if '\0' does not exist
 void copytostr(int y, int s[]) {
 	if (y < MAX_Y && y >= 0)
 		for (int x = 0; x < MAX_X && (s[x] = array_2d_r(x, y)) != '\0'; x++)
 			;
 	else
-		printf("copytostr: error that Y does not exist in array_2d: %d", y);
+		printf("copytostr: error that Y does not exist in array_2d: %d\n", y);
 }
 
 //str s has bigger or equal size than MAX_X
+//if '\0' does not exist
 void copyfromstr(int y, int s[]) {
 	if (y < MAX_Y && y >= 0)
 		for (int x = 0; x < MAX_X && array_2d_w(x, y, s[x]) != '\0'; x++)
 			;
 	else
-		printf("copyfromstr: error that Y does not exist in array_2d: %d", y);
+		printf("copyfromstr: error that Y does not exist in array_2d: %d\n", y);
 }
 
 int nextfreeY_2d = 0;
@@ -104,9 +106,9 @@ void reset_save2d(void) {
 //2 if second is higher
 int alphabetENGY(int y1, int y2) //works with ASCII
 {
-	//analog of RU version, see for comments it
+	//analog of RU version, see it for comments
 	if (y1 >= MAX_Y || y2 >= MAX_Y || y1 < 0 || y2 < 0) {
-		printf("alphabetY: error, these Y does not exist: %d or %d", y1, y2);
+		printf("alphabetY: error, these Y does not exist: %d or %d\n", y1, y2);
 		return -1;
 	}
 	short st1, st2;
@@ -146,12 +148,13 @@ int alphabetRUY(int y1, int y2) //works with ASCII
 {
 	//error check
 	if (y1 >= MAX_Y || y2 >= MAX_Y || y1 < 0 || y2 < 0) {
-		printf("alphabetY: error, these Y does not exist: %d or %d", y1, y2);
+		printf("alphabetY: error, these Y does not exist: %d or %d\n", y1, y2);
 		return -1;
 	}
 	short st1, st2;
 	int c1, c2;
 	int i = 0, j = 0;
+	//ищем первую несовпадающую русскую букву и по ней судим
 	do {
 		//ищем след. букву
 		for (; (st1 = isletter(array_2d_r(i, y1))) != 3 && st1 != 4 && st1 != -1; i++)

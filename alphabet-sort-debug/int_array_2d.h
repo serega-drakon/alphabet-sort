@@ -107,7 +107,7 @@ int alphabetRUY(int y1, int y2) //works with ASCII
 		for (; (st2 = isletter(array_2d_r(j, y2))) != 3 && st2 != 4 && st2 != -1; j++)
 			;
         //"alphabetization"
-		if (st1 == 3)
+		if (st1 == 3)							//FIXME: Не учитывает букву Ё
 			c1 = array_2d_r(i, y1) - 224; 
 		else if (st1 == 4)
 			c1 = array_2d_r(i, y1) - 192;

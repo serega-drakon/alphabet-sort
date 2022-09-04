@@ -22,7 +22,7 @@ void fprint(int s[], FILE* out) {
 		putc(s[i], out);
 }
 
-int isletter(int a) { //FIXME: не учитывает букву Ё //а её то в кодировке ASCII и нет)
+int isletter(int a) { //FIXME: не учитывает букву Ё 
 	if (a >= 'a' && a <= 'z')
 		return 1;
 	else if (a >= 'A' && a <= 'Z')
@@ -38,7 +38,7 @@ int isletter(int a) { //FIXME: не учитывает букву Ё //а её �
 }
 
 //returns alphabet position of received letter
-//or -1 if it is not a RU letter
+//or 0 if it is not a RU letter
 int letter_RU(int a){ //ASCII
 return 0;  //FIXME
 }

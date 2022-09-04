@@ -1,13 +1,12 @@
 #ifndef INT_ARRAY_2D
 #define INT_ARRAY_2D
 
-/*вообще тут можно все проверки на ошибки повырезать
-* но пусть это будет "debug version" */
+/* DEBUG VERSION */
 
 #include <stdio.h>
 #include "fileio.h"
 
-//размеры массива
+//Р Р°Р·РјРµСЂС‹ РјР°СЃСЃРёРІР°
 #define MAX_X 300
 #define MAX_Y 8000
 
@@ -31,20 +30,6 @@ int array_2d_w(int x, int y, int value) {
 	else
 		printf("array_2d_w: error this element of array does not exist: x - %d, y - %d\n", x, y);
 	return 0;
-}
-
-//swap y1 line and y2
-void swapY(int y1, int y2) {
-	if (y1 < MAX_Y && y2 < MAX_Y && y1 >= 0 && y2 >= 0) {
-		int temp;
-		for (int x = 0; x < MAX_X; x++) {
-			temp = array_2d_r(x, y1);
-			array_2d_w(x, y1, array_2d_r(x, y2));
-			array_2d_w(x, y2, temp);
-		}
-	}
-	else
-		printf("swapY: error these Y does not exist in array_2d: %d or %d\n", y1, y2);
 }
 
 //copy y1 line to y2
@@ -82,8 +67,8 @@ void loadfromfile2d(FILE* in) {
 	int line[MAX_X];
 	extern int nextfreeY_2d;
 	int x;
-	for (; getline(line, MAX_X, in) > 0 && nextfreeY_2d < MAX_Y - 1; nextfreeY_2d++)
-		//оставляет как минимум одну строку "в запасе" (нужно для буфера в main.c)
+	for (; _getline(line, MAX_X, in) > 0 && nextfreeY_2d < MAX_Y - 1; nextfreeY_2d++)
+		//РѕСЃС‚Р°РІР»СЏРµС‚ РѕРґРЅСѓ СЃС‚СЂРѕРєСѓ РІ Р·Р°РїР°СЃРµ РґР»СЏ Р±СѓС„РµСЂР° РІ main.c
 		copyfromstr(nextfreeY_2d, line);
 }
 
@@ -101,9 +86,67 @@ void reset_save2d(void) {
 	nextfreeY_2d = 0;
 }
 
+
 //returns 0 if strings are the same
 //1 if fisrt is higher
 //2 if second is higher
+int alphabetRUY(int y1, int y2) //works with ASCII
+{
+	//error check
+	if (y1 >= MAX_Y || y2 >= MAX_Y || y1 < 0 || y2 < 0) {
+		printf("alphabetY: error, these Y does not exist: %d or %d\n", y1, y2);
+		return -1;
+	}
+	short st1, st2;
+	int c1, c2;
+	int i = 0, j = 0;
+	do {
+		//search for next letter
+		for (; (st1 = isletter(array_2d_r(i, y1))) != 3 && st1 != 4 && st1 != -1; i++)
+			;
+		for (; (st2 = isletter(array_2d_r(j, y2))) != 3 && st2 != 4 && st2 != -1; j++)
+			;
+        //"alphabetization"
+		if (st1 == 3)
+			c1 = array_2d_r(i, y1) - 224; 
+		else if (st1 == 4)
+			c1 = array_2d_r(i, y1) - 192;
+		else if (st1 == -1)
+			c1 = 255 - 224 + 1;
+
+		if (st2 == 3)
+			c2 = array_2d_r(j, y2) - 224;
+		else if (st2 == 4)
+			c2 = array_2d_r(j, y2) - 192;
+		else if (st2 == -1)
+			c2 = 255 - 224 + 1;
+
+		//comparison
+		if (c1 < c2)
+			return 1;
+		else if (c2 < c1)
+			return 2;
+	} while (st1 != -1 && st2 != -1 && c1 == c2 && i++ < MAX_X && j++ < MAX_X);
+	return 0;
+}
+
+
+/* Р”Р°Р»СЊС€Рµ РјРѕР¶РµС€СЊ РЅРµ СЃРјРѕС‚СЂРµС‚СЊ, СЌС‚Рѕ СЃРєРѕСЂРµРµ С‚Р°Рє РґР»СЏ РјРµРЅСЏ Р°РЅР°Р»РѕРіРё РїСЂРµРґС‹РґСѓС‰РёС… С„СѓРЅРєС†РёР№ */
+
+//swap y1 line and y2
+void swapY(int y1, int y2) {
+	if (y1 < MAX_Y && y2 < MAX_Y && y1 >= 0 && y2 >= 0) {
+		int temp;
+		for (int x = 0; x < MAX_X; x++) {
+			temp = array_2d_r(x, y1);
+			array_2d_w(x, y1, array_2d_r(x, y2));
+			array_2d_w(x, y2, temp);
+		}
+	}
+	else
+		printf("swapY: error these Y does not exist in array_2d: %d or %d\n", y1, y2);
+}
+
 int alphabetENGY(int y1, int y2) //works with ASCII
 {
 	//analog of RU version, see it for comments
@@ -141,56 +184,5 @@ int alphabetENGY(int y1, int y2) //works with ASCII
 	return 0;
 }
 
-//returns 0 if strings are the same
-//1 if fisrt is higher
-//2 if second is higher
-int alphabetRUY(int y1, int y2) //works with ASCII
-{
-	//error check
-	if (y1 >= MAX_Y || y2 >= MAX_Y || y1 < 0 || y2 < 0) {
-		printf("alphabetY: error, these Y does not exist: %d or %d\n", y1, y2);
-		return -1;
-	}
-	short st1, st2;
-	int c1, c2;
-	int i = 0, j = 0;
-	//ищем первую несовпадающую русскую букву и по ней судим
-	do {
-		//ищем след. букву
-		for (; (st1 = isletter(array_2d_r(i, y1))) != 3 && st1 != 4 && st1 != -1; i++)
-			;
-		for (; (st2 = isletter(array_2d_r(j, y2))) != 3 && st2 != 4 && st2 != -1; j++)
-			;
-
-		/*смотрим независимо от регистра букв
-		* при этом символ '\0' ставим в самый низкий приоритет
-		  для того, чтобы строки без русских букв уходили на дно*/
-		if (st1 == 3)
-			c1 = array_2d_r(i, y1) - ('а' & 255); 
-			/* побитовое И использовал изза шизы в кодировке
-			*  компилятор у меня расширяет 8бит в 16/32бита 
-			*  методом распространения знака, а из файла код,
-			*  полученный методом вставки нулей слева
-			*  те компилятор думает что это -32, а файл дает 224 */
-		else if (st1 == 4)
-			c1 = array_2d_r(i, y1) - ('А' & 255);
-		else if (st1 == -1)
-			c1 = ('я' & 255) + 1;
-
-		if (st2 == 3)
-			c2 = array_2d_r(j, y2) - ('а' & 255);
-		else if (st2 == 4)
-			c2 = array_2d_r(j, y2) - ('А' & 255);
-		else if (st2 == -1)
-			c2 = ('я' & 255) + 1;
-
-		//сама сверка по алфавиту 
-		if (c1 < c2)
-			return 1;
-		else if (c2 < c1)
-			return 2;
-	} while (st1 != -1 && st2 != -1 && c1 == c2 && i++ < MAX_X && j++ < MAX_X);
-	return 0;
-}
 
 #endif

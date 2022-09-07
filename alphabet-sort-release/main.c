@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "int_array_2d.h"
+#include "include/int_array_2d.h"
 
 main() { //only ANSI txt!
 	FILE* in;

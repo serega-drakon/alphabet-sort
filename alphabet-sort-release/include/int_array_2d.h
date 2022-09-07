@@ -1,7 +1,7 @@
 #ifndef INT_ARRAY_2D
 #define INT_ARRAY_2D
 
-/* DEBUG VERSION */
+/* RELEASE VERSION */
 
 #include <stdio.h>
 #include "fileio.h"

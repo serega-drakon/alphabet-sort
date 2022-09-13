@@ -22,6 +22,8 @@ void fprint(int s[], FILE* out) {
 		putc(s[i], out);
 }
 
+//Дает 3 если кириллица в нижнем регистре
+// 4 - кириллица в верхнем
 int isletter(int a) { //works with ASCII
 	if (a >= 'a' && a <= 'z')
 		return 1;

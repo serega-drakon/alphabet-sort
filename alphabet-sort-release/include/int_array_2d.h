@@ -85,16 +85,16 @@ int alphabetRUY(int y1, int y2) //works with ASCII
 			;
         //"alphabetization"
 		if (st1 == 3)
-			c1 = array_2d_r(i, y1) - 224; 
+			c1 = array_2d_r(i, y1) - 224;//'а'
 		else if (st1 == 4)
-			c1 = array_2d_r(i, y1) - 192;
+			c1 = array_2d_r(i, y1) - 192;//'А'
 		else if (st1 == -1)
 			c1 = 255 - 224 + 1;
 
 		if (st2 == 3)
-			c2 = array_2d_r(j, y2) - 224;
+			c2 = array_2d_r(j, y2) - 224;//'а'
 		else if (st2 == 4)
-			c2 = array_2d_r(j, y2) - 192;
+			c2 = array_2d_r(j, y2) - 192;//'А'
 		else if (st2 == -1)
 			c2 = 255 - 224 + 1;
 

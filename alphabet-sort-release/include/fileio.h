@@ -41,6 +41,9 @@ int isletter(int a) { //works with ASCII
 		return 0;
 }
 
+//выдает позицию данной буквы по алфавиту,
+//в алфавит включены цифры, они стоят после всех букв
+//нулевой символ стоит после всех остальных
 int alphabetPosRu(int a){
     switch(isletter(a)) {
         case 3: //строчные

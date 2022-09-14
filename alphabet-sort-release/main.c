@@ -1,11 +1,20 @@
 #include <stdio.h>
 #include "include/int_array_2d.h"
 
-int main(void) { //only ANSI txt!
+int main(void) {
 	FILE* in;
 	FILE* out;
 	in = fopen("main_in.txt", "r");
-	out = fopen("main_out.txt", "w");
+    out = fopen("main_out.txt", "w");
+    //error check
+    if(in == 0){
+        printf("error: there are no main_in.txt");
+        return -1;
+    }
+    if(out == 0) {
+        printf("error: there are no main_out.txt");
+        return -2;
+    }
 	loadfromfile2d(in);
 
 	//shell's sort algorithm

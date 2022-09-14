@@ -85,7 +85,6 @@ int alphabetRUY(int y1, int y2) //works with ASCII
         //"alphabetization"
         st1 = alphabetPosRu(array_2d_r(i, y1));
         st2 = alphabetPosRu(array_2d_r(j, y2));
-
 		//comparison
 		if (st1 < st2)
 			return 1;

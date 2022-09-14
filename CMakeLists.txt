@@ -8,4 +8,4 @@ include_directories(alphabet-sort-release/include)
 add_executable(alphabet_sort_new
         alphabet-sort-release/include/fileio.h
         alphabet-sort-release/include/int_array_2d.h
-        alphabet-sort-release/main.c)
+        alphabet-sort-release/main.c alphabet-sort-release/include/funcs2d.h alphabet-sort-release/include/alphabet.h)

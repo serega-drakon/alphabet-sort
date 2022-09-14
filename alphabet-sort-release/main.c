@@ -18,7 +18,7 @@ int main(void) {
         return -2;
     }
 
-    int nextfreeY_2d = 0;//следующая свободная позиция в массиве (нужна для savetofile())
+    int nextfreeY_2d = 0;//следующая свободная позиция в массиве
 	loadFromFile2d(in, &nextfreeY_2d);
 
 	//shell's sort algorithm

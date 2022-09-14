@@ -6,7 +6,7 @@
 #include <stdio.h>
 #include "fileio.h"
 
-//Размеры массива   //UPDATE
+//Размеры массива   //UPDATE: added READ&WRITE
 #define MAX_X 300
 #define MAX_Y 8000
 #define READ 0
@@ -24,12 +24,12 @@ int arr2d_Main(int flag, int x, int y, int value){
     }
 }
 
-//read        //UPDATE: обертка
+//read        //UPDATE: обертка к arr2d_Main
 int array_2d_r(int x, int y) {
     return arr2d_Main(READ, x, y, 0);
 }
 
-//write        //UPDATE: обертка
+//write        //UPDATE: обертка к arr2d_Main
 int array_2d_w(int x, int y, int value) {
     return arr2d_Main(WRITE, x, y, value);
 }
@@ -68,7 +68,7 @@ void loadFromFile2d(FILE* in, int *nextfreeY_2d) {
         printf("error: массив переполнен, но программа отсортирует все что может\n");
 }
 
-void saveToFile2d(FILE* out, int *nextfreeY_2d) {      //UPDATE
+void saveToFile2d(FILE* out, int *nextfreeY_2d) {      //UPDATE: перешел к ссылке вместо глобальной переменной
 	int line[ MAX_X ];
 	for (int y = 0; y < *nextfreeY_2d; y++) {
 		copytostr(y, line);

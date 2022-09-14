@@ -15,7 +15,7 @@ int main(void) {
         printf("error: there are no main_out.txt");
         return -2;
     }
-	loadfromfile2d(in);
+	loadFromFile2d(in);
 
 	//shell's sort algorithm
 	extern int nextfreeY_2d;
@@ -32,7 +32,7 @@ int main(void) {
                 copyfromstr(j + gap, buf);
 		}
 
-	savetofile2d(out);
+	saveToFile2d(out);
 	fclose(in);
 	fclose(out);
     return 0;

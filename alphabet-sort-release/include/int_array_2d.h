@@ -6,21 +6,43 @@
 #include <stdio.h>
 #include "fileio.h"
 
-//Размеры массива
+//Размеры массива   //UPDATE
 #define MAX_X 300
 #define MAX_Y 8000
+#define READ 0
+#define WRITE 1
 
-int arr2d[MAX_X * MAX_Y];
-
-//read
-int array_2d_r(int x, int y) {
-	return arr2d[y * MAX_X + x];
+         //UPDATE
+int arr2d_Main(int flag, int x, int y, int value){
+    static int arr2d[MAX_X * MAX_Y];
+    switch(flag){
+        case READ:
+            return arr2d[y * MAX_X + x];
+        case WRITE:
+            arr2d[y * MAX_X + x] = value;
+            return arr2d[y * MAX_X + x];
+    }
 }
 
-//write
+int nextFreeY(int flag, int value){
+    static int nextfreeY_2d = 0;
+    switch(flag){
+        case READ:
+            return nextfreeY_2d;
+        case WRITE:
+            nextfreeY_2d = value;
+            return value;
+    }
+}
+
+//read        //UPDATE
+int array_2d_r(int x, int y) {
+    return arr2d_Main(READ, x, y, 0);
+}
+
+//write        //UPDATE
 int array_2d_w(int x, int y, int value) {
-	arr2d[y * MAX_X + x] = value;
-	return arr2d[y * MAX_X + x];
+    return arr2d_Main(WRITE, x, y, value);
 }
 
 //copy y1 line to y2
@@ -50,28 +72,29 @@ void copyfromstr(int y, int s[]) {
 int nextfreeY_2d = 0;
 
 // можно загрузиться сразу с нескольких файлов)
-void loadfromfile2d(FILE* in) { 
-	int line[MAX_X];
+void loadFromFile2d(FILE* in) {
+	int line[ MAX_X ];
 	extern int nextfreeY_2d;
 	int x;
 	for (; _getline(line, MAX_X, in) > 0 && nextfreeY_2d < MAX_Y; nextfreeY_2d++)
 		copyfromstr(nextfreeY_2d, line);
 }
 
-void savetofile2d(FILE* out) {
+void saveToFile2d(FILE* out) {
 	extern int nextfreeY_2d;
-	int line[MAX_X];
+	int line[ MAX_X ];
 	for (int y = 0; y < nextfreeY_2d; y++) {
 		copytostr(y, line);
 		fprint(line, out);
 	}
 }
 
-void reset_save2d(void) {
+void reset_Save2d(void) {
 	extern int nextfreeY_2d;
 	nextfreeY_2d = 0;
 }
 
+                     //UPDATE
 //returns 0 if strings are the same
 //1 if first is higher
 //2 if second is higher

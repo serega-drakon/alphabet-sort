@@ -22,6 +22,7 @@ void fprint(int s[], FILE* out) {
 		putc(s[i], out);
 }
 
+        //UPDATE
 //Дает 3 если кириллица в нижнем регистре
 // 4 - кириллица в верхнем
 int isletter(int a) { //works with ASCII
@@ -41,6 +42,7 @@ int isletter(int a) { //works with ASCII
 		return 0;
 }
 
+           //UPDATE
 //выдает позицию данной буквы по алфавиту,
 //в алфавит включены цифры, они стоят после всех букв
 //нулевой символ стоит после всех остальных

@@ -35,8 +35,26 @@ int isletter(int a) { //works with ASCII
 		return 4;
 	else if (a == '\0')
 		return -1;
+    else if (a >= '1' && a <= '9')
+        return -2;
 	else
 		return 0;
+}
+
+int alphabetPosRu(int a){
+    switch(isletter(a)) {
+        case 3: //строчные
+            return a - 224;
+        case 4: //заглавные
+            return a - 192;
+        case -1:
+            return 255 - 224 + 11;// '\0' идет после всех
+            //'я' - 'а' + 10цифр + 1
+        case -2: //цифры стоят после букв
+            return 255 - 224 + 1 + a - '0';
+        default:
+            return -1;
+    }
 }
 
 #endif

@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "include/int_array_2d.h"
 
-main() { //only ANSI txt!
+int main(void) { //only ANSI txt!
 	FILE* in;
 	FILE* out;
 	in = fopen("main_in.txt", "r");
@@ -23,4 +23,5 @@ main() { //only ANSI txt!
 	savetofile2d(out);
 	fclose(in);
 	fclose(out);
+    return 0;
 }

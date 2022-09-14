@@ -70,12 +70,11 @@ void reset_save2d(void) {
 }
 
 //returns 0 if strings are the same
-//1 if fisrt is higher
+//1 if first is higher
 //2 if second is higher
 int alphabetRUY(int y1, int y2) //works with ASCII
 {
-	short st1, st2;
-	int c1, c2;
+	int st1, st2;
 	int i = 0, j = 0;
 	do {
 		//search for next letter
@@ -84,26 +83,15 @@ int alphabetRUY(int y1, int y2) //works with ASCII
 		for (; (st2 = isletter(array_2d_r(j, y2))) != 3 && st2 != 4 && st2 != -1; j++)
 			;
         //"alphabetization"
-		if (st1 == 3)
-			c1 = array_2d_r(i, y1) - 224;//'а'
-		else if (st1 == 4)
-			c1 = array_2d_r(i, y1) - 192;//'А'
-		else if (st1 == -1)
-			c1 = 255 - 224 + 1;
-
-		if (st2 == 3)
-			c2 = array_2d_r(j, y2) - 224;//'а'
-		else if (st2 == 4)
-			c2 = array_2d_r(j, y2) - 192;//'А'
-		else if (st2 == -1)
-			c2 = 255 - 224 + 1;
+        st1 = alphabetPosRu(array_2d_r(i, y1));
+        st2 = alphabetPosRu(array_2d_r(j, y2));
 
 		//comparison
-		if (c1 < c2)
+		if (st1 < st2)
 			return 1;
-		else if (c2 < c1)
+		else if (st2 < st1)
 			return 2;
-	} while (st1 != -1 && st2 != -1 && c1 == c2 && i++ < MAX_X && j++ < MAX_X);
+	} while (st1 != (255 - 224 + 11) && st2 != (255 - 224 + 11) && i++ < MAX_X && j++ < MAX_X);
 	return 0;
 }
 

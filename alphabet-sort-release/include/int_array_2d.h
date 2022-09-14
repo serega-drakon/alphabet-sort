@@ -32,15 +32,19 @@ void copyY(int y1, int y2) {
 //str s has bigger or equal size than MAX_X
 //if '\0' does not exist
 void copytostr(int y, int s[]) {
-	for (int x = 0; x < MAX_X && (s[x] = array_2d_r(x, y)) != '\0'; x++)
+    int x;
+	for (x = 0; x < MAX_X && (s[x] = array_2d_r(x, y)) != '\0'; x++)
 		;
+    s[x] = '\0';
 }
 
 //str s has bigger or equal size than MAX_X
 //if '\0' does not exist
 void copyfromstr(int y, int s[]) {
-	for (int x = 0; x < MAX_X && array_2d_w(x, y, s[x]) != '\0'; x++)
+    int x;
+	for (x = 0; x < MAX_X && array_2d_w(x, y, s[x]) != '\0'; x++)
 		;
+    s[x] = '\0';
 }
 
 int nextfreeY_2d = 0;
@@ -50,8 +54,7 @@ void loadfromfile2d(FILE* in) {
 	int line[MAX_X];
 	extern int nextfreeY_2d;
 	int x;
-	for (; _getline(line, MAX_X, in) > 0 && nextfreeY_2d < MAX_Y - 1; nextfreeY_2d++)
-		//оставляет одну строку "в запасе" для буфера в main.c
+	for (; _getline(line, MAX_X, in) > 0 && nextfreeY_2d < MAX_Y; nextfreeY_2d++)
 		copyfromstr(nextfreeY_2d, line);
 }
 
@@ -72,7 +75,7 @@ void reset_save2d(void) {
 //returns 0 if strings are the same
 //1 if first is higher
 //2 if second is higher
-int alphabetRUY(int y1, int y2) //works with ASCII
+int alphabetRUY(int y1, int s[]) //works with ASCII
 {
 	int st1, st2;
 	int i = 0, j = 0;
@@ -80,11 +83,11 @@ int alphabetRUY(int y1, int y2) //works with ASCII
 		//search for next letter
 		for (; (st1 = isletter(array_2d_r(i, y1))) != 3 && st1 != 4 && st1 != -1; i++)
 			;
-		for (; (st2 = isletter(array_2d_r(j, y2))) != 3 && st2 != 4 && st2 != -1; j++)
+		for (; (st2 = isletter(s[j])) != 3 && st2 != 4 && st2 != -1; j++)
 			;
         //"alphabetization"
         st1 = alphabetPosRu(array_2d_r(i, y1));
-        st2 = alphabetPosRu(array_2d_r(j, y2));
+        st2 = alphabetPosRu(s[j]);
 		//comparison
 		if (st1 < st2)
 			return 1;

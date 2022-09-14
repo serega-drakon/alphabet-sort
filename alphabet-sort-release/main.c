@@ -20,13 +20,16 @@ int main(void) {
 	//shell's sort algorithm
 	extern int nextfreeY_2d;
 	int gap, i, j;
+    int buf[ MAX_X ];
 	for(gap = nextfreeY_2d / 2; gap > 0; gap /= 2)
 		for (i = gap; i < nextfreeY_2d; i++) {
-			copyY(i, nextfreeY_2d);
-			for (j = i - gap; j >= 0 && alphabetRUY(nextfreeY_2d, j) == 1; j -= gap)
+			//copyY(i, nextfreeY_2d);
+            copytostr(i, buf);
+			for (j = i - gap; j >= 0 && alphabetRUY(j, buf) == 2; j -= gap)
 				copyY(j, j + gap);
 			if(j + gap != i)
-				copyY(nextfreeY_2d,j + gap);
+				//copyY(nextfreeY_2d,j + gap);
+                copyfromstr(j + gap, buf);
 		}
 
 	savetofile2d(out);

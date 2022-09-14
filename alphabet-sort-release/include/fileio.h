@@ -41,24 +41,6 @@ int isletter(int a) { //works with ASCII
 	else
 		return 0;
 }
-    //UPDATE: новая функция
-//выдает позицию данной буквы по алфавиту,
-//в алфавит включены цифры, они стоят после всех букв
-//нулевой символ стоит после всех остальных
-int alphabetPosRu(int a){
-    switch(isletter(a)) {
-        case 3: //строчные
-            return a - 224;
-        case 4: //заглавные
-            return a - 192;
-        case -1:
-            return 255 - 224 + 11;// '\0' идет после всех
-            //'я' - 'а' + 10цифр + 1
-        case -2: //цифры стоят после букв
-            return 255 - 224 + 1 + a - '0';
-        default:
-            return -1;
-    }
-}
+
 
 #endif

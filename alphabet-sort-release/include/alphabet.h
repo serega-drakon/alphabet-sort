@@ -55,9 +55,9 @@ int alphabetRUY(int y1, int s[]) //works with ASCII
     int i = 0, j = 0;
     do {
         //search for next letter
-        for (; (st1 = isletter(array_2d_r(i, y1))) != 3 && st1 != 4 && st1 != -1; i++)
+        for (; (st1 = isletter(array_2d_r(i, y1))) != 3 && st1 != 4 && st1 != -1 && st1!= -2; i++)
             ;
-        for (; (st2 = isletter(s[j])) != 3 && st2 != 4 && st2 != -1; j++)
+        for (; (st2 = isletter(s[j])) != 3 && st2 != 4 && st2 != -1 && st2 != -2; j++)
             ;
         //"alphabetization"
         st1 = alphabetPosRu(array_2d_r(i, y1));

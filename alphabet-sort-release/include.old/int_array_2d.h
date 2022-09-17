@@ -13,7 +13,7 @@
 #define WRITE 1
 
   //UPDATE: вместо глобальной переменной сделал основу и "обертки"
-int arr2d_Main(int flag, int x, int y, int value){
+int array2d_Main(int flag, int x, int y, int value){
     static int arr2d[MAX_X * MAX_Y];
     switch(flag){
         case READ:
@@ -25,12 +25,12 @@ int arr2d_Main(int flag, int x, int y, int value){
 }
 
 //read        //UPDATE: обертка к arr2d_Main
-int array_2d_r(int x, int y) {
+int array2d_r(int x, int y) {
     return arr2d_Main(READ, x, y, 0);
 }
 
 //write        //UPDATE: обертка к arr2d_Main
-int array_2d_w(int x, int y, int value) {
+int array2d_w(int x, int y, int value) {
     return arr2d_Main(WRITE, x, y, value);
 }
 

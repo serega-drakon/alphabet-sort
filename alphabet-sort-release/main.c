@@ -25,15 +25,15 @@ int main(void) {
         return NoOutputFile;
     }
 
-    int nextfreeY_2d = 0;//следующая свободная позиция в массиве
+    int nextfreeY = 0;//следующая свободная позиция в массиве
 	int status; //проверка на наличие ошибок
-    status = loadFromFile2d(in, &nextfreeY_2d);
+    status = loadFromFile2d(in, &nextfreeY);
 
 	//shell's sort algorithm
 	int gap, i, j;
     int buf[ MAX_X ];
-	for(gap = nextfreeY_2d / 2; gap > 0; gap /= 2)
-		for (i = gap; i < nextfreeY_2d; i++) {
+	for(gap = nextfreeY / 2; gap > 0; gap /= 2)
+		for (i = gap; i < nextfreeY; i++) {
             copyToStr(i, buf);
 			for (j = i - gap; j >= 0 && compareRU(j, buf) == 2; j -= gap)
 				copyY(j, j + gap);
@@ -41,7 +41,7 @@ int main(void) {
                 copyFromStr(j + gap, buf);
 		}
 
-	saveToFile2d(out, &nextfreeY_2d);
+	saveToFile2d(out, &nextfreeY);
 	fclose(in);
 	fclose(out);
 

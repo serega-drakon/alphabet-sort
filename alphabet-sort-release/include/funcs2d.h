@@ -4,8 +4,8 @@
 #include <stdio.h>
 
 void copyY(int fromY, int toY);
-void copyToStr(int y, int outputStr[]);
-void copyFromStr(int y, int inputStr[]);
+void copyToStr(int lineNum, int outputStr[]);
+void copyFromStr(int lineNum, int inputStr[]);
 int loadFromFile2d(FILE* inputFile, int *nextfreeY);
 void saveToFile2d(FILE* outputFile, int *nextfreeY);
 

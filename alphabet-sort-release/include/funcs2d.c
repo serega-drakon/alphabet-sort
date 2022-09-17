@@ -15,18 +15,18 @@ void copyY(int fromY, int toY) {
 
 //outputStr has bigger or equal size than MAX_X
 //if '\0' does not exist
-void copyToStr(int y, int outputStr[]) {
+void copyToStr(int lineNum, int outputStr[]) {
     int x;
-    for (x = 0; x < MAX_X && (outputStr[x] = array2d_r(x, y)) != '\0'; x++)
+    for (x = 0; x < MAX_X && (outputStr[x] = array2d_r(x, lineNum)) != '\0'; x++)
         ;
     outputStr[x] = '\0';
 }
 
 //inputStr has bigger or equal size than MAX_X
 //if '\0' does not exist
-void copyFromStr(int y, int inputStr[]) {
+void copyFromStr(int lineNum, int inputStr[]) {
     int x;
-    for (x = 0; x < MAX_X && array2d_w(x, y, inputStr[x]) != '\0'; x++)
+    for (x = 0; x < MAX_X && array2d_w(x, lineNum, inputStr[x]) != '\0'; x++)
         ;
     inputStr[x] = '\0';
 }

@@ -12,7 +12,7 @@
 
 //Дает 3 если кириллица в нижнем регистре
 // 4 - кириллица в верхнем
-int isletter(int a) { //works with ASCII
+int isLetter(int a) { //works with ASCII
     if (a >= 'a' && a <= 'z')
         return 1;
     else if (a >= 'A' && a <= 'Z')
@@ -33,7 +33,7 @@ int isletter(int a) { //works with ASCII
 //в алфавит включены цифры, они стоят после всех букв
 //нулевой символ стоит после всех остальных
 int alphabetPosRu(int a){
-    switch(isletter(a)) {
+    switch(isLetter(a)) {
         case 3: //строчные
             return a - CHAR_A_LOW;
         case 4: //заглавные
@@ -57,9 +57,9 @@ int compareRU(int frstLineNum, int scndLineStr[]) //works with ASCII
     int i = 0, j = 0;
     do {
         //search for next letter
-        for (; (letterToCmp1 = isletter(array2d_r(i, frstLineNum))) != 3 && letterToCmp1 != 4 && letterToCmp1 != -1 && letterToCmp1 != -2; i++)
+        for (; (letterToCmp1 = isLetter(array2d_r(i, frstLineNum))) != 3 && letterToCmp1 != 4 && letterToCmp1 != -1 && letterToCmp1 != -2; i++)
             ;
-        for (; (letterToCmp2 = isletter(scndLineStr[j])) != 3 && letterToCmp2 != 4 && letterToCmp2 != -1 && letterToCmp2 != -2; j++)
+        for (; (letterToCmp2 = isLetter(scndLineStr[j])) != 3 && letterToCmp2 != 4 && letterToCmp2 != -1 && letterToCmp2 != -2; j++)
             ;
         //"alphabetization"
         letterToCmp1 = alphabetPosRu(array2d_r(i, frstLineNum));

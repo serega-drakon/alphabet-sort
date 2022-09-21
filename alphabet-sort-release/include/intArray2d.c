@@ -1,6 +1,7 @@
 ///////////////////// Двумерный массив /////////////////////////////
 
 #include "intArray2d.h"
+#include <stdio.h>
 
 #define READ 0
 #define WRITE 1
@@ -18,10 +19,20 @@ int array2d_Main(int flag, int x, int y, int value){
 
 //read
 int array2d_r(int x, int y) {
-    return array2d_Main(READ, x, y, 0);
+    if((x >= 0)&&(x < MAX_X) && (y >= 0) && (y < MAX_Y))
+        return array2d_Main(READ, x, y, 0);
+    else{
+        printf("array2d_r: element x = %d, y = %d is not belongs to array\n",x,y);
+        return 0;
+    }
 }
 
 //write
 int array2d_w(int x, int y, int value) {
-    return array2d_Main(WRITE, x, y, value);
+    if((x >= 0)&&(x < MAX_X) && (y >= 0) && (y < MAX_Y))
+        return array2d_Main(WRITE, x, y, value);
+    else{
+        printf("array2d_r: element x = %d, y = %d is not belongs to array\n",x,y);
+        return 0;
+    }
 }

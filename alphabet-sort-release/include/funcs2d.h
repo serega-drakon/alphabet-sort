@@ -5,7 +5,7 @@
 
 void copyY(int fromY, int toY);
 void copyToStr(int lineNum, int outputStr[]);
-void copyFromStr(int lineNum, int inputStr[]);
+int copyFromStr(int lineNum, int inputStr[]);
 int loadFromFile2d(FILE* inputFile, int *nextfreeY);
 void saveToFile2d(FILE* outputFile, int *nextfreeY);
 

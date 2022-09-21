@@ -17,18 +17,24 @@ void copyY(int fromY, int toY) {
 //if '\0' does not exist
 void copyToStr(int lineNum, int outputStr[]) {
     int x;
-    for (x = 0; x < MAX_X && (outputStr[x] = array2d_r(x, lineNum)) != '\0'; x++)
+    for (x = 0; x < MAX_X - 1 && (outputStr[x] = array2d_r(x, lineNum)) != '\0'; x++)
         ;
     outputStr[x] = '\0';
 }
 
 //inputStr has bigger or equal size than MAX_X
 //if '\0' does not exist
-void copyFromStr(int lineNum, int inputStr[]) {
+int copyFromStr(int lineNum, int inputStr[]) {
     int x;
-    for (x = 0; x < MAX_X && array2d_w(x, lineNum, inputStr[x]) != '\0'; x++)
+    for (x = 0; x < MAX_X - 1 && array2d_w(x, lineNum, inputStr[x]) != '\0'; x++)
         ;
     inputStr[x] = '\0';
+    if(x == MAX_X){
+        printf("copyFromStr(): stack is full\n");
+        return STACK_IS_FULL;
+    }
+    else
+        return FUNC_SUCCESS;
 }
 
 //можно загрузиться сразу с нескольких файлов)
@@ -38,7 +44,7 @@ int loadFromFile2d(FILE* inputFile, int *nextfreeY) {
     for (; getline2(line, MAX_X, inputFile) > 0 && (*nextfreeY) < MAX_Y; (*nextfreeY)++)
         copyFromStr(*nextfreeY, line);
     if((*nextfreeY) == MAX_Y && getline2(line, MAX_X, inputFile) > 0) {
-        printf("error: массив переполнен, но программа отсортирует все что может\n");
+        printf("error: stack is full, sort will be done with part.\n");
         return STACK_IS_FULL;
     }
     else

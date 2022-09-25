@@ -3,14 +3,16 @@
 #include "include/funcs2d.h"
 #include "include/alphabet.h"
 
-int main(void) {
-    enum errors{
-        Success = 0,
-        StackIsFull = 1,
-        NoInputFile = 2,
-        NoOutputFile = 3
-    };
+enum errors{
+    UnknownError = -1,
+    Success = 0,
+    MemoryError = 1,
+    NoInputFile = 2,
+    NoOutputFile = 3
+};
 
+int main(void) {
+    //file initialization
 	FILE* in;
 	FILE* out;
 	in = fopen("main_in.txt", "r");
@@ -24,11 +26,13 @@ int main(void) {
         printf("error: there are no main_out.txt");
         return NoOutputFile;
     }
-
+    //array initialization
+    struct dArray *array = arrayInit();
+    arraySwitch(array);
+    //loading from file
     int nextfreeY = 0;//следующая свободная позиция в массиве
-	int status; //проверка на наличие ошибок
+	int status; //хранит код ошибки
     status = loadFromFile2d(in, &nextfreeY);
-
 	//shell's sort algorithm
 	int gap, i, j;
     int buf[ MAX_X ];
@@ -40,16 +44,19 @@ int main(void) {
 			if(j + gap != i)
                 copyFromStr(j + gap, buf);
 		}
-
+    //saving&closing files&arrays
 	saveToFile2d(out, &nextfreeY);
+    arrayFree(array);
 	fclose(in);
 	fclose(out);
-
+    //end
     switch(status){
-        case -1:
-            return StackIsFull;
+        case MEM_ERR:
+            return MemoryError;
         case 0:
             return Success;
+        default:
+            return UnknownError;
     }
 }
 

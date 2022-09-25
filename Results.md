@@ -10,16 +10,16 @@
 8. ~~Очевидное дублирвоание кода~~ 
 ```
 if (st1 == 3)
-    c1 = array2d_r(i, y1) - 224;//'а'
+    c1 = array_r(i, y1) - 224;//'а'
 else if (st1 == 4)
-    c1 = array2d_r(i, y1) - 192;//'А'
+    c1 = array_r(i, y1) - 192;//'А'
 else if (st1 == -1)
     c1 = 255 - 224 + 1;
 
 if (st2 == 3)
-    c2 = array2d_r(j, y2) - 224;//'а'
+    c2 = array_r(j, y2) - 224;//'а'
 else if (st2 == 4)
-    c2 = array2d_r(j, y2) - 192;//'А'
+    c2 = array_r(j, y2) - 192;//'А'
 else if (st2 == -1)
     c2 = 255 - 224 + 1;
 ```

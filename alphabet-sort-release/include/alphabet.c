@@ -57,12 +57,12 @@ int compareRU(int frstLineNum, int scndLineStr[]) //works with ASCII
     int i = 0, j = 0;
     do {
         //search for next letter
-        for (; (letterToCmp1 = isLetter(array2d_r(i, frstLineNum))) != 3 && letterToCmp1 != 4 && letterToCmp1 != -1 && letterToCmp1 != -2; i++)
+        for (; (letterToCmp1 = isLetter(array_r(i, frstLineNum))) != 3 && letterToCmp1 != 4 && letterToCmp1 != -1 && letterToCmp1 != -2; i++)
             ;
         for (; (letterToCmp2 = isLetter(scndLineStr[j])) != 3 && letterToCmp2 != 4 && letterToCmp2 != -1 && letterToCmp2 != -2; j++)
             ;
         //"alphabetization"
-        letterToCmp1 = alphabetPosRu(array2d_r(i, frstLineNum));
+        letterToCmp1 = alphabetPosRu(array_r(i, frstLineNum));
         letterToCmp2 = alphabetPosRu(scndLineStr[j]);
         //comparison
         if (letterToCmp1 < letterToCmp2)

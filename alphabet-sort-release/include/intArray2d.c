@@ -1,38 +1,117 @@
 ///////////////////// Двумерный массив /////////////////////////////
-
 #include "intArray2d.h"
 #include <stdio.h>
+#include <stdlib.h>
 
 #define READ 0
 #define WRITE 1
+#define STEP 1000  //шаг на который будет расширяться массив
 
-int array2d_Main(int flag, int x, int y, int value){
-    static int arr2d[MAX_X * MAX_Y];
-    switch(flag){
+struct dArray {
+    int *array;
+    int maxX;     //const value
+    int y;     //default = 0
+    _Bool memErr;//default = 0
+};
+
+void arrayCheckout(int flag, struct dArray *dArray_W, struct dArray **dArray_R);
+int arrayExtend(int y, struct dArray *ptrArray);
+
+int array_Main(int flag, int x, int y, int value) {
+    struct dArray *ptrArray;
+    _Bool err = 0;
+    arrayCheckout(READ, 0,&ptrArray);
+    if(ptrArray->memErr)
+        return 0;
+    if(y >= ptrArray->y){
+        if(arrayExtend(y, ptrArray) == MEM_ERR){
+            printf("memory allocation error\n");
+            ptrArray->memErr = 1;
+            return 0;
+        }
+        err = 1;
+    }
+
+    switch (flag) {
         case READ:
-            return arr2d[y * MAX_X + x];
+            if (err)
+                printf("Значение X = %d, Y = %d получено из неопределенной переменной\n", x, y);
+            return ptrArray->array[y * ptrArray->maxX + x];
         case WRITE:
-            arr2d[y * MAX_X + x] = value;
-            return arr2d[y * MAX_X + x];
+            return (ptrArray->array[y * ptrArray->maxX + x] = value);
     }
 }
 
-//read
-int array2d_r(int x, int y) {
-    if((x >= 0)&&(x < MAX_X) && (y >= 0) && (y < MAX_Y))
-        return array2d_Main(READ, x, y, 0);
+int arrayExtend(int y, struct dArray *ptrArray){
+    int *buff = ptrArray->array;
+    //переменная х теряет смысл, теперь это новое кол-во элементов массива
+    y = y + 1 + (STEP - (y + 1) % STEP);
+    ptrArray->array = malloc(y * ptrArray->maxX * sizeof(int));
+    if(ptrArray->array == NULL)
+        return MEM_ERR;
+    for(int j = 0, i; j < ptrArray->y; j++)
+        for(i = 0; i < ptrArray->maxX; i++)//
+            ptrArray->array[j * ptrArray->maxX + i] = buff[j * ptrArray->maxX + i];
+    ptrArray->y = y;
+    free(buff);
+    return 0;
+}
+void arrayCheckout(int flag, struct dArray *dArray_W, struct dArray **dArray_R) { //обожаю дрочево со ссылками оаоаоа
+    static struct dArray *branch;//а хули пусть будет как гит
+
+    switch (flag) {
+        case READ:
+            *dArray_R = branch;
+            break;
+        case WRITE:
+            branch = dArray_W;
+            break;
+    }
+}
+
+/////////////////////////////////////пользовательские////////////////////////////////////////
+void* arrayInit(){ //сразу выделяет память под массив
+    struct dArray *ptrArray = malloc(sizeof(struct dArray));
+    ptrArray->maxX = MAX_X;
+    ptrArray->y = 0;
+    ptrArray->memErr = 0;
+    if(arrayExtend(ptrArray->y, ptrArray) == MEM_ERR){
+        printf("memory error\n");
+        ptrArray->memErr = 1;
+    }
+    return ptrArray;
+}
+
+void arrayFree(struct dArray *ptrArray){
+    if(ptrArray->memErr == 0)
+        free(ptrArray->array);
+    free(ptrArray);
+}
+
+_Bool arrayMemErr(){
+    struct dArray *ptrArray;
+    arrayCheckout(READ, 0, &ptrArray);
+    return ptrArray->memErr;
+}
+
+void arraySwitch(struct dArray *ptrArray){
+    arrayCheckout(WRITE, ptrArray, 0);
+}
+
+int array_r(int x, int y){
+    if (x >= 0 && x < MAX_X && y >= 0)
+        return array_Main(READ, x, y, 0);
     else{
-        printf("array2d_r: element x = %d, y = %d is not belongs to array\n",x,y);
+        printf("array_r error: X = %d Y = %d\n", x, y);
         return 0;
     }
 }
 
-//write
-int array2d_w(int x, int y, int value) {
-    if((x >= 0)&&(x < MAX_X) && (y >= 0) && (y < MAX_Y))
-        return array2d_Main(WRITE, x, y, value);
+int array_w(int x, int y, int value){
+    if(x >= 0 && x < MAX_X && y >= 0)
+        return array_Main(WRITE, x, y, value);
     else{
-        printf("array2d_r: element x = %d, y = %d is not belongs to array\n",x,y);
+        printf("array_w error: X = %d Y = %d\n", x, y);
         return 0;
     }
 }

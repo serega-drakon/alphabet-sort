@@ -73,20 +73,26 @@ void arrayCheckout(int flag, struct dArray *dArray_W, struct dArray **dArray_R) 
 /////////////////////////////////////пользовательские////////////////////////////////////////
 void* arrayInit(){ //сразу выделяет память под массив
     struct dArray *ptrArray = malloc(sizeof(struct dArray));
-    ptrArray->maxX = MAX_X;
-    ptrArray->y = 0;
-    ptrArray->memErr = 0;
-    if(arrayExtend(ptrArray->y, ptrArray) == MEM_ERR){
-        printf("memory error\n");
-        ptrArray->memErr = 1;
+    if(ptrArray != NULL) {
+        ptrArray->maxX = MAX_X;
+        ptrArray->y = 0;
+        ptrArray->memErr = 0;
+        if (arrayExtend(ptrArray->y, ptrArray) == MEM_ERR) {
+            printf("arrayExtend: memory error\n");
+            ptrArray->memErr = 1;
+        }
     }
+    else
+        printf("arrayInit: memory allocation error\n");
     return ptrArray;
 }
 
 void arrayFree(struct dArray *ptrArray){
-    if(ptrArray->memErr == 0)
-        free(ptrArray->array);
-    free(ptrArray);
+    if(ptrArray != NULL) {
+        if (ptrArray->memErr == 0)
+            free(ptrArray->array);
+        free(ptrArray);
+    }
 }
 
 _Bool arrayMemErr(){
